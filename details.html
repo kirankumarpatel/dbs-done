@@ -31,7 +31,7 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li><a href="#">Inbox</a></li>
+                        <li><a href="#">All Tasks</a></li>
                         <li><a href="#">Categories</a></li>
                         <li><a href="#">Archive</a></li>
                     </ul>
@@ -42,41 +42,35 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xs-12 task-details">
-                    <h3 class="title">Inbox</h3><small class="subtitle">All tasks without a category are located here.</small>
+                    <h3 class="title">Contact Melanie about SSO <span class="glyphicon glyphicon-exclamation-sign task-important"></span></h3>
+                    <small>Not started</small>
+                    <small class="subtitle">Due on November 5th, 2014</small>
 
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            <form action="">
-                                <input type="checkbox" />
-                                <label>
-                                     Contact Melanie about SSO <span class="glyphicon glyphicon-exclamation-sign task-important"></span><br /><small>November 5th, 2014</small>
-                                </label>
-                            </form>
-                        </li>
-                        <li class="list-group-item">
-                            <form action="">
-                                <input type="checkbox" /> Set up VCS access
-                            </form>
-                        </li>
-                        <li class="list-group-item">
-                            <form action="">
-                                <input type="checkbox" /> Milk — don't forget the milk!
-                            </form>
-                        </li>
-                        <li class="list-group-item">
-                            <form action="">
-                                <input type="checkbox" />
-                                <label>
-                                     Rent<br /><small>November 7th, 2014</small>
-                                </label>
-                            </form>
-                        </li>
-                        <li class="list-group-item">
-                            <form action="">
-                                <input type="checkbox" /> Submit 1st draft
-                            </form>
-                        </li>
-                    </ul>
+                    <h4>Notes <small><a href="#">(edit)</a></small></h4>
+                    <p>Melanie starts working on the 5th and she has no SSO access. Contact TL about this and let them know about the situation.</p>
+
+                    <p>Should be completed before EOD ADST.</p>
+
+                    <h4>Files attached</h4>
+                    <p><em>No files attached. <a href="#">Add one</a> or drag one here to attach it.</em></p>
+
+                    <h4>Move to</h4>
+
+                    <form action="">
+                        <select>
+                            <option>Inbox</option>
+                            <option>Work</option>
+                            <option>University</option>
+                            <option>Personal</option>
+                            <option>Add new...</option>
+                        </select>
+                    </form>
+
+                    <div class="btn-group task-actions">
+                      <button type="button" class="btn btn-success">Complete</button>
+                      <button type="button" class="btn btn-default">In Progress</button>
+                      <button type="button" class="btn btn-default">Delete</button>
+                    </div>
                 </div>
             </div>
         </div>
