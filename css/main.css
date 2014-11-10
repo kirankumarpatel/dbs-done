@@ -5,11 +5,13 @@ body { padding-top: 70px; }
 small {color: #999;}
 
 /* bs overrides */
-.tasks .list-group-item {padding: 0;}
+.tasks .list-group-item {padding: 0; height: 5em;}
 
 /* task list */
-.task {display: block; padding: 16px 24px; width: 100%; height: 5em;}
+.task {display: inline-block; clear: none; padding: 16px 24px; width: auto; height: 100%; color: #3e3f3a;}
 .task:hover {text-decoration: none}
+.task-action {border-right: solid 1px #dfd7ca; float: left; height:100%; line-height: 3.5em;}
+.task-action-complete {color: #93c54b;}
 
 /* details list */
 .task-actions {position: relative; top: 20px;}
