@@ -46,6 +46,15 @@
 				<div class="col-xs-12 task-details">
 					<h3 class="title">Inbox</h3><small class="subtitle">All tasks without a category are located here.</small>
 
+					<form role="form" id="form-add-task">
+						<div class="input-group">
+							<input type="text" class="form-control" id="new-task" placeholder="What do you need to do today?" />
+							<span class="input-group-btn">
+								<button class="btn btn-primary" type="button">+</button>
+							</span>
+						</div>
+					</form>
+
 					<ul id="task-list" class="list-group tasks">
 						<li class="list-group-item">
 							<a href="#" class="task task-action task-action-complete"><i class="fa fa-circle-o fa-2x fa-fw"></i></a>
