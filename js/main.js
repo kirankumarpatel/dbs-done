@@ -92,23 +92,42 @@ function addTask(data) {
 	tasks.push(data);
 }
 
+/**
+* adds a new task to the system with content only, assuming it
+* has been sent from the Inbox view.
+*
+*/
+function addInboxTask() {
+	var input = $("#new-task");
+	var task = {content: input.val()};
+	input.val("");
+	addTask(task);
+	renderTask(task);
+	updateStorage();
+}
+
+/**
+* updates the localStorage array by serialising it
+*
+* this may be useful someday
+*/
 function updateStorage() {
 	localStorage["tasks"] = JSON.stringify(tasks);
 }
 
-// load them
+// load them and do stuff
 $(document).ready(function() {
 	for(x = 0; x < tasks.length; x++) {
 		renderTask(tasks[x]);
 	}
 
-	// adding task from inbox
+	// adding tasks from inbox
 	$("#add-task").on('click', function() {
-		var input = $("#new-task");
-		var task = {content: input.val()};
-		input.val("");
-		addTask(task);
-		renderTask(task);
-		updateStorage();
+		addInboxTask();
+	});
+
+	$("#form-add-task").on('submit', function(event) {
+		event.preventDefault();
+		addInboxTask();
 	});
 });
