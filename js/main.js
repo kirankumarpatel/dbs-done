@@ -3,11 +3,12 @@ if (!Modernizr.localstorage) {
 	alert("Offline storage is not supported by this browser. You might need to update or change it to continue using this application.");
 }
 
+// START CONFIG
 // provinding a leveled playing field
 localStorage.clear();
 
 // default tasks
-tasks = [{
+var tasks = [{
 		content: "Pack bags",
 		note: "Don't forget the gadgets!",
 		due: "November 20, 2014", // @TODO: use the datetime object
@@ -34,9 +35,11 @@ localStorage["tasks"] = JSON.stringify(tasks);
 
 // then retrieve them (to test everything out)
 tasks = JSON.parse(localStorage["tasks"]);
+// END CONFIG
 
 /**
-* Render all the tasks inside the inbox
+* Render all the tasks inside the inbox and displays them in the
+* task views throughout the application.
 *
 * data - an array of tasks
 * return void
@@ -65,6 +68,33 @@ function renderTask(data) {
 
 	$("#task-list").append(item);
 }
+/**
+* adds a new task to the system.
+*
+* data - an object with all the information {content, note, due, priority}
+*/
+function addTask(data) {
+	if (data.note == undefined) {
+		data.note = null;
+	}
+
+	if (data.due == undefined) {
+		data.due = null;
+	}
+
+	if (data.priority == undefined) {
+		data.priority = null;
+	}
+
+	console.log("Adding data to array...");
+	console.log(data);
+
+	tasks.push(data);
+}
+
+function updateStorage() {
+	localStorage["tasks"] = JSON.stringify(tasks);
+}
 
 // load them
 $(document).ready(function() {
@@ -72,4 +102,17 @@ $(document).ready(function() {
 		// create a function out of this
 		renderTask(tasks[x]);
 	}
+
+	$("#add-task").on('click', function() {
+		var input = $("#new-task");
+		var task = {content: input.val()};
+
+		// clear everything
+		input.val("");
+
+		// update
+		addTask(task);
+		renderTask(task);
+		updateStorage();
+	});
 });
