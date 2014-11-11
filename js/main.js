@@ -12,22 +12,26 @@ var tasks = [{
 		content: "Pack bags",
 		note: "Don't forget the gadgets!",
 		due: "November 20, 2014", // @TODO: use the datetime object
-		priority: 2
+		priority: 2,
+		done: false
 	}, {
 		content: "Review entries",
 		note: "Check Zendesk latest entries for info", // @TODO: overflowing makes the task disappear
 		due: null,
-		priority: 1	
+		priority: 1,
+		done: false
 	}, {
 		content: "Start investigation in Library",
 		note: null,
 		due: null,
-		priority: 3
+		priority: 3,
+		done: false
 	}, {
 		content: "Evaluate proposal",
 		note: null,
 		due: "November 18, 2014",
-		priority: 1	
+		priority: 1,
+		done: false
 	}];
 
 // store them
@@ -86,7 +90,11 @@ function addTask(data) {
 		data.priority = null;
 	}
 
-	console.log("Adding data to array...");
+	if (data.done == undefined) {
+		data.done = false;
+	}
+
+	console.log("Adding data to storage...");
 	console.log(data);
 
 	tasks.push(data);
