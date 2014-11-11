@@ -21,12 +21,12 @@ var tasks = [{
 	}, {
 		content: "Start investigation in Library",
 		note: null,
-		due: "November 18, 2014",
+		due: null,
 		priority: 3
 	}, {
 		content: "Evaluate proposal",
 		note: null,
-		due: null,
+		due: "November 18, 2014",
 		priority: 1	
 	}];
 
@@ -99,18 +99,14 @@ function updateStorage() {
 // load them
 $(document).ready(function() {
 	for(x = 0; x < tasks.length; x++) {
-		// create a function out of this
 		renderTask(tasks[x]);
 	}
 
+	// adding task from inbox
 	$("#add-task").on('click', function() {
 		var input = $("#new-task");
 		var task = {content: input.val()};
-
-		// clear everything
 		input.val("");
-
-		// update
 		addTask(task);
 		renderTask(task);
 		updateStorage();
