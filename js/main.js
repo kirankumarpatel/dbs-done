@@ -3,42 +3,55 @@ if (!Modernizr.localstorage) {
 	alert("Offline storage is not supported by this browser. You might need to update or change it to continue using this application.");
 }
 
+/**
+* generates a randum hash between of a string between 1 and 100.000.000
+* (one hundred million) to provide unique id's
+*/
+function generateHash() {
+	return hex_md5(String((Math.floor(Math.random() * 100000000) + 1)));
+}
+
 // START CONFIG
 // provinding a leveled playing field
 localStorage.clear();
 
 // default tasks
-var tasks = [{
+var app = {};
+app.tasks = [{
+		id: generateHash(),
 		content: "Pack bags",
 		note: "Don't forget the gadgets!",
 		due: "November 20, 2014", // @TODO: use the datetime object
 		priority: 2,
-		done: false
 	}, {
+		id: generateHash(),
 		content: "Review entries",
 		note: "Check Zendesk latest entries for info", // @TODO: overflowing makes the task disappear
 		due: null,
 		priority: 1,
-		done: false
 	}, {
+		id: generateHash(),
 		content: "Start investigation in Library",
 		note: null,
 		due: null,
 		priority: 3,
-		done: false
 	}, {
+		id: generateHash(),
 		content: "Evaluate proposal",
 		note: null,
 		due: "November 18, 2014",
 		priority: 1,
-		done: false
 	}];
 
+app.completed = new Array();
+
 // store them
-localStorage["tasks"] = JSON.stringify(tasks);
+localStorage["tasks"] = JSON.stringify(app.tasks);
+localStorage["completed"] = JSON.stringify(app.completed);
 
 // then retrieve them (to test everything out)
-tasks = JSON.parse(localStorage["tasks"]);
+app.tasks = JSON.parse(localStorage["tasks"]);
+app.completed = JSON.parse(localStorage["completed"]);
 // END CONFIG
 
 /**
@@ -50,11 +63,13 @@ tasks = JSON.parse(localStorage["tasks"]);
 */
 function renderTask(data) {
 	item = $(document.createElement("li"))
-		.addClass("list-group-item");
+		.addClass("list-group-item")
+		.attr("id", "task-" + data.id);
 
 	action = $(document.createElement("a"))
 		.addClass("task task-action task-action-complete")
 		.attr("href", "#")
+		.attr("data-task", data.id)
 		.html('<i class="fa fa-circle-o fa-2x fa-fw"></i>').appendTo(item);
 
 	if (data.note != null) {
@@ -78,6 +93,8 @@ function renderTask(data) {
 * data - an object with all the information {content, note, due, priority}
 */
 function addTask(data) {
+	data.id = generateHash();
+
 	if (data.note == undefined) {
 		data.note = null;
 	}
@@ -94,10 +111,7 @@ function addTask(data) {
 		data.done = false;
 	}
 
-	console.log("Adding data to storage...");
-	console.log(data);
-
-	tasks.push(data);
+	app.tasks.push(data);
 }
 
 /**
@@ -114,19 +128,37 @@ function addInboxTask() {
 	updateStorage();
 }
 
+function completeTask(id) {
+	console.log(id);
+	// get the task and store it temporarily
+	var task = $.grep(app.tasks, function(e) {
+		return e.id = id;
+	});
+
+	// making sure we get the same result
+	console.log(task);
+
+	// add it to the completed array
+	app.completed.push(task);
+	// remove it from the tasks array
+	// commit changes
+	updateStorage();
+}
+
 /**
 * updates the localStorage array by serialising it
 *
 * this may be useful someday
 */
 function updateStorage() {
-	localStorage["tasks"] = JSON.stringify(tasks);
+	localStorage["tasks"] = JSON.stringify(app.tasks);
+	localStorage["completed"] = JSON.stringify(app.completed);
 }
 
 // load them and do stuff
 $(document).ready(function() {
-	for(x = 0; x < tasks.length; x++) {
-		renderTask(tasks[x]);
+	for(x = 0; x < app.tasks.length; x++) {
+		renderTask(app.tasks[x], x);
 	}
 
 	// adding tasks from inbox
@@ -137,5 +169,13 @@ $(document).ready(function() {
 	$("#form-add-task").on('submit', function(event) {
 		event.preventDefault();
 		addInboxTask();
+	});
+
+	// completing tasks in inbox
+	$("#task-list").on("click", ".task-action-complete", function(event) {
+		event.preventDefault();
+		var task = $(this).data("task");
+		completeTask(task);
+		$("#task-" + task).remove();
 	});
 });
