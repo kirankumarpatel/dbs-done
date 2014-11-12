@@ -11,13 +11,20 @@ function generateHash() {
 	return hex_md5(String((Math.floor(Math.random() * 100000000) + 1)));
 }
 
-// START CONFIG
-// provinding a leveled playing field
-localStorage.clear();
+// this will decide what's up with the application
+var DEBUG = false;
 
-// default tasks
-var app = {};
-app.tasks = [{
+if (app == undefined) {
+	var app = {};
+}
+
+// debug mode activated
+if (DEBUG == true) {
+	// prevent issues with localStorage
+	localStorage.clear();	
+
+	// default tasks
+	app.tasks = [{
 		id: generateHash(),
 		content: "Pack bags",
 		note: "Don't forget the gadgets!",
@@ -43,13 +50,15 @@ app.tasks = [{
 		priority: 1,
 	}];
 
-app.completed = new Array();
+	// provide blank completed tasks
+	app.completed = new Array();
 
-// store them
-localStorage["tasks"] = JSON.stringify(app.tasks);
-localStorage["completed"] = JSON.stringify(app.completed);
+	// store them
+	localStorage["tasks"] = JSON.stringify(app.tasks);
+	localStorage["completed"] = JSON.stringify(app.completed);
+}
 
-// then retrieve them (to test everything out)
+// retrieve the information
 app.tasks = JSON.parse(localStorage["tasks"]);
 app.completed = JSON.parse(localStorage["completed"]);
 // END CONFIG
@@ -127,21 +136,26 @@ function addInboxTask() {
 	renderTask(task);
 	updateStorage();
 }
-
+/**
+* sets a tasks as completed
+*
+*/
 function completeTask(id) {
-	console.log(id);
-	// get the task and store it temporarily
-	var task = $.grep(app.tasks, function(e) {
-		return e.id = id;
+	var complete;
+
+	// search which item to complete
+	$.each(app.tasks, function(index) {
+		if (app.tasks[index].id == id) {
+			complete = index;
+		}
 	});
+	
+	// remove from ui, tasks array, and store in the proper one
+	$("#task-" + id).remove();
+	app.completed.push(app.tasks[complete]);
+	app.tasks.splice(complete, 1);
 
-	// making sure we get the same result
-	console.log(task);
-
-	// add it to the completed array
-	app.completed.push(task);
-	// remove it from the tasks array
-	// commit changes
+	// then update
 	updateStorage();
 }
 
@@ -176,6 +190,6 @@ $(document).ready(function() {
 		event.preventDefault();
 		var task = $(this).data("task");
 		completeTask(task);
-		$("#task-" + task).remove();
+		// $("#task-" + task).remove();
 	});
 });
