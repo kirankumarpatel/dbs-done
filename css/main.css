@@ -13,6 +13,9 @@ small {color: #999;}
 .task-action {border-right: solid 1px #dfd7ca; float: left; height:100%; line-height: 3.5em;}
 .task-action-complete {color: #93c54b;}
 
+#form-add-task {
+	margin-bottom: 1.5em;
+}
 /* details list */
 .task-actions {position: relative; top: 20px;}
 .task-important {color: #CD4939;}
