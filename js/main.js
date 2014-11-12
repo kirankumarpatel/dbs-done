@@ -59,8 +59,17 @@ if (DEBUG == true) {
 }
 
 // retrieve the information
-app.tasks = JSON.parse(localStorage["tasks"]);
-app.completed = JSON.parse(localStorage["completed"]);
+if (localStorage["tasks"] != undefined) {
+	app.tasks = JSON.parse(localStorage["tasks"]);	
+} else {
+	app.tasks = [];
+}
+
+if (localStorage["completed"] != undefined) {
+	app.completed = JSON.parse(localStorage["completed"]);
+} else {
+	app.completed = [];
+}
 // END CONFIG
 
 /**
@@ -102,6 +111,10 @@ function renderTask(data) {
 * data - an object with all the information {content, note, due, priority}
 */
 function addTask(data) {
+	if (data.content == '') {
+		return false;
+	}
+
 	data.id = generateHash();
 
 	if (data.note == undefined) {
@@ -121,6 +134,7 @@ function addTask(data) {
 	}
 
 	app.tasks.push(data);
+	return true;
 }
 
 /**
@@ -132,9 +146,10 @@ function addInboxTask() {
 	var input = $("#new-task");
 	var task = {content: input.val()};
 	input.val("");
-	addTask(task);
-	renderTask(task);
-	updateStorage();
+	if (addTask(task) == true) {
+		renderTask(task);
+		updateStorage();
+	}
 }
 /**
 * sets a tasks as completed
