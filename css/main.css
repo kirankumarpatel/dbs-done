@@ -4,6 +4,8 @@ body { padding-top: 70px; }
 .subtitle {display: block; margin-bottom: 20px}
 small {color: #999;}
 
+a:hover {cursor: pointer;}
+
 /* bs overrides */
 .tasks .list-group-item {padding: 0; height: 5em;}
 
@@ -16,6 +18,7 @@ small {color: #999;}
 #form-add-task {
 	margin-bottom: 1.5em;
 }
+
 /* details list */
 .task-actions {position: relative; top: 20px;}
 .task-important {color: #CD4939;}

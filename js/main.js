@@ -207,4 +207,12 @@ $(document).ready(function() {
 		completeTask(task);
 		// $("#task-" + task).remove();
 	});
+
+	// show advanced options
+	$("#more-options").on('click', function(e) {
+		e.preventDefault();
+		$(this).fadeOut(200, function() {
+			$("#options").hide().removeClass("hidden").slideDown(300);
+		});
+	});
 });
