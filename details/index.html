@@ -45,7 +45,7 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-xs-12 task-details">
-					<form role="form">
+					<form role="form" name="data" id="data">
 						<!-- load everything from here -->
 						<input type="hidden" name="id" value="" id="id" />
 
@@ -63,14 +63,16 @@
 						<div class="form-group">
 							<div class="btn-group" data-toggle="buttons">
 								<label class="btn btn-primary">
-									<input type="radio" name="status" autocomplete="off" checked> All done! <i class="fa fa-check"></i>
+									<input type="radio" name="done" value="true" autocomplete="off" id="task-complete"> All done! <i class="fa fa-check"></i>
 								</label>
-								<label class="btn btn-primary active">
-									<input type="radio" name="status" autocomplete="off" checked> Not complete
+								<label class="btn btn-primary">
+									<input type="radio" name="done" value="false" autocomplete="off" id="task-incomplete"> Not complete
 								</label>
 							</div>
 						</div>
 						<!-- end status -->
+
+						<button class="btn btn-success" id="save" type="button">Save changes</button>
 
 						<a id="more-options" class="pull-right">Additional options</a>
 
