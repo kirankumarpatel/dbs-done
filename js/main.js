@@ -124,7 +124,7 @@ function renderTask(data, which) {
 
 	task = $(document.createElement("a"))
 		.addClass("task")
-		.attr("href", "details#" + data.id)
+		.attr("href", "details/#" + data.id)
 		.html(title)
 		.appendTo(item);
 
