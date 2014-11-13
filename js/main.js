@@ -28,7 +28,7 @@ if (DEBUG == true) {
 		id: generateHash(),
 		title: "Pack bags",
 		note: "Don't forget the gadgets!",
-		due: "November 20, 2014", // @TODO: use the datetime object
+		due: "2014-11-20", // @TODO: use the datetime object
 		priority: 2,
 		done: false
 	}, {
@@ -49,14 +49,14 @@ if (DEBUG == true) {
 		id: generateHash(),
 		title: "Evaluate proposal",
 		note: null,
-		due: "November 18, 2014",
+		due: "2014-11-18",
 		priority: 1,
 		done: false
 	}, {
 		id: generateHash(),
 		title: "Develop system",
 		note: "Web and Mobile Technologies",
-		due: "November 23, 2014",
+		due: "2014-11-23",
 		priority: 1,
 		done: true
 	}];
@@ -124,6 +124,7 @@ function renderTask(data, which) {
 
 	task = $(document.createElement("a"))
 		.addClass("task")
+		.attr("href", "details#" + data.id)
 		.html(title)
 		.appendTo(item);
 
@@ -238,4 +239,31 @@ $(document).ready(function() {
 			$("#options").hide().removeClass("hidden").slideDown(300);
 		});
 	});
+
+	// load everyting in the details view
+	var details = {};
+	var path = window.location.pathname;
+
+	// details view code
+	// this is terrible code and I should be punished
+	if (path.search('details') !== -1) {
+		details.hash = window.location.hash.substr(1);
+		$.each(app.tasks, function(index) {
+			if (app.tasks[index].id == details.hash) {
+				details.data = app.tasks[index];
+
+				// fill all the data in the form
+				$("#id").val(details.data.id);
+				$("#title").val(details.data.title);
+				$("#note").html(details.data.note);
+				$("#due").val(details.data.due);
+
+				switch(details.data.priority) {
+					case 1: $("#priority-high").attr("checked", "checked").parent("label").addClass("active"); break;
+					case 2: $("#priority-normal").attr("checked", "checked").parent("label").addClass("active"); break;
+					case 3: $("#priority-low").attr("checked", "checked").parent("label").addClass("active"); break;
+				}
+			}
+		});
+	}
 });
