@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<title></title>
+		<title>Done: Details</title>
 		<meta name="description" content="">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 		<link rel="stylesheet" href="../css/bs.css">
@@ -29,7 +29,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#">Done <i class="fa fa-check"></i></a>
+					<a class="navbar-brand" href="../">Done <i class="fa fa-check"></i></a>
 				</div>
 
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -45,32 +45,34 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-xs-12 task-details">
-					<form role="form">
+					<form role="form" name="data" id="data">
 						<!-- load everything from here -->
-						<input type="hidden" name="id" value="" id="task-id" />
+						<input type="hidden" name="id" value="" id="id" />
 
 						<div class="form-group">
 							<h4>Title</h4>
-							<input type="text" class="form-control" placeholder="What are you going to do?" id="task-title"/>
+							<input type="text" class="form-control" placeholder="What are you going to do?" id="title"/>
 						</div>
 
 						<div class="form-group">
 							<h4>Notes</h4>
-							<textarea class="form-control" placeholder="What do you have to keep in mind?" rows="3"></textarea>
+							<textarea class="form-control" placeholder="What do you have to keep in mind?" rows="3" id="note"></textarea>
 						</div>
 						
 						<!-- status -->
 						<div class="form-group">
 							<div class="btn-group" data-toggle="buttons">
 								<label class="btn btn-primary">
-									<input type="radio" name="status" autocomplete="off" checked> All done! <i class="fa fa-check"></i>
+									<input type="radio" name="done" value="true" autocomplete="off" id="task-complete"> All done! <i class="fa fa-check"></i>
 								</label>
-								<label class="btn btn-primary active">
-									<input type="radio" name="status" autocomplete="off" checked> Not complete
+								<label class="btn btn-primary">
+									<input type="radio" name="done" value="false" autocomplete="off" id="task-incomplete"> Not complete
 								</label>
 							</div>
 						</div>
 						<!-- end status -->
+
+						<button class="btn btn-success" id="save" type="button">Save changes</button>
 
 						<a id="more-options" class="pull-right">Additional options</a>
 
@@ -91,7 +93,7 @@
 							<!-- due date -->
 							<div class="form-group">
 								<h4>Due date</h4>
-								<input type="date" class="form-control" name="due" />
+								<input type="date" class="form-control" name="due" id="due" value="2014-11-18" />
 							</div>
 							<!-- end due date -->
 
@@ -100,15 +102,15 @@
 								<div class="btn-group" data-toggle="buttons">
 									<h4>Priority</h4>
 									<label class="btn btn-primary">
-										<input type="radio" name="priority" autocomplete="off" checked> Low
-									</label>
-					
-									<label class="btn btn-primary active">
-										<input type="radio" name="priority" autocomplete="off"> Normal
+										<input type="radio" name="priority" value="3" autocomplete="off" id="priority-low"> Low
 									</label>
 					
 									<label class="btn btn-primary">
-										<input type="radio" name="priority" autocomplete="off"> High
+										<input type="radio" name="priority" value="2" autocomplete="off" id="priority-normal"> Normal
+									</label>
+					
+									<label class="btn btn-primary">
+										<input type="radio" name="priority" value="1" autocomplete="off" id="priority-high"> High
 									</label>
 								</div>
 							</div>
