@@ -30,32 +30,39 @@ if (DEBUG == true) {
 		note: "Don't forget the gadgets!",
 		due: "November 20, 2014", // @TODO: use the datetime object
 		priority: 2,
+		done: false
 	}, {
 		id: generateHash(),
 		title: "Review entries",
 		note: "Check Zendesk latest entries for info", // @TODO: overflowing makes the task disappear
 		due: null,
 		priority: 1,
+		done: false
 	}, {
 		id: generateHash(),
 		title: "Start investigation in Library",
 		note: null,
 		due: null,
 		priority: 3,
+		done: false
 	}, {
 		id: generateHash(),
 		title: "Evaluate proposal",
 		note: null,
 		due: "November 18, 2014",
 		priority: 1,
+		done: false
+	}, {
+		id: generateHash(),
+		title: "Develop system",
+		note: "Web and Mobile Technologies",
+		due: "November 23, 2014",
+		priority: 1,
+		done: true
 	}];
-
-	// provide blank completed tasks
-	app.completed = new Array();
 
 	// store them
 	localStorage["tasks"] = JSON.stringify(app.tasks);
-	localStorage["completed"] = JSON.stringify(app.completed);
 }
 
 // retrieve the information
@@ -63,12 +70,6 @@ if (localStorage["tasks"] != undefined) {
 	app.tasks = JSON.parse(localStorage["tasks"]);	
 } else {
 	app.tasks = [];
-}
-
-if (localStorage["completed"] != undefined) {
-	app.completed = JSON.parse(localStorage["completed"]);
-} else {
-	app.completed = [];
 }
 // END CONFIG
 
@@ -79,7 +80,30 @@ if (localStorage["completed"] != undefined) {
 * data - an array of tasks
 * return void
 */
-function renderTask(data) {
+function renderTask(data, which) {
+	// set default tasks to incomplete
+	var which = typeof which !== 'undefined' ? which : "incomplete";
+	var exit = false;
+
+	// make sure only the appropriate tasks are rendered
+	switch(which) {
+		case "incomplete":
+			if (data.done == true) {
+				exit = true;
+			}
+		break;
+
+		case "complete":
+			if (data.done == false) {
+				exit = true;
+			}
+		break;
+	}
+
+	if (exit == true) {
+		return;
+	}
+
 	item = $(document.createElement("li"))
 		.addClass("list-group-item")
 		.attr("id", "task-" + data.id);
@@ -111,11 +135,13 @@ function renderTask(data) {
 * data - an object with all the information {title, note, due, priority}
 */
 function addTask(data) {
+	// do not add empty tasks
 	if (data.title == '') {
 		return false;
 	}
 
 	data.id = generateHash();
+	data.done = false;
 
 	if (data.note == undefined) {
 		data.note = null;
@@ -152,7 +178,7 @@ function addInboxTask() {
 	}
 }
 /**
-* sets a tasks as completed
+* sets a task as completed
 *
 */
 function completeTask(id) {
@@ -161,14 +187,12 @@ function completeTask(id) {
 	// search which item to complete
 	$.each(app.tasks, function(index) {
 		if (app.tasks[index].id == id) {
-			complete = index;
+			app.tasks[index].done = true;
 		}
 	});
 	
-	// remove from ui, tasks array, and store in the proper one
+	// remove from ui
 	$("#task-" + id).remove();
-	app.completed.push(app.tasks[complete]);
-	app.tasks.splice(complete, 1);
 
 	// then update
 	updateStorage();
@@ -181,13 +205,12 @@ function completeTask(id) {
 */
 function updateStorage() {
 	localStorage["tasks"] = JSON.stringify(app.tasks);
-	localStorage["completed"] = JSON.stringify(app.completed);
 }
 
 // load them and do stuff
 $(document).ready(function() {
 	for(x = 0; x < app.tasks.length; x++) {
-		renderTask(app.tasks[x], x);
+		renderTask(app.tasks[x]);
 	}
 
 	// adding tasks from inbox
@@ -215,6 +238,4 @@ $(document).ready(function() {
 			$("#options").hide().removeClass("hidden").slideDown(300);
 		});
 	});
-
-	// load stuff in the details view
 });
