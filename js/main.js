@@ -26,25 +26,25 @@ if (DEBUG == true) {
 	// default tasks
 	app.tasks = [{
 		id: generateHash(),
-		content: "Pack bags",
+		title: "Pack bags",
 		note: "Don't forget the gadgets!",
 		due: "November 20, 2014", // @TODO: use the datetime object
 		priority: 2,
 	}, {
 		id: generateHash(),
-		content: "Review entries",
+		title: "Review entries",
 		note: "Check Zendesk latest entries for info", // @TODO: overflowing makes the task disappear
 		due: null,
 		priority: 1,
 	}, {
 		id: generateHash(),
-		content: "Start investigation in Library",
+		title: "Start investigation in Library",
 		note: null,
 		due: null,
 		priority: 3,
 	}, {
 		id: generateHash(),
-		content: "Evaluate proposal",
+		title: "Evaluate proposal",
 		note: null,
 		due: "November 18, 2014",
 		priority: 1,
@@ -91,16 +91,16 @@ function renderTask(data) {
 		.html('<i class="fa fa-circle-o fa-2x fa-fw"></i>').appendTo(item);
 
 	if (data.note != null) {
-		content = data.content + "<br /><small>" + data.note + "</small>";
+		title = data.title + "<br /><small>" + data.note + "</small>";
 	} else if (data.due != null) {
-		content = data.content + "<br /><small>" + data.due + "</small>";
+		title = data.title + "<br /><small>" + data.due + "</small>";
 	} else {
-		content = data.content;
+		title = data.title;
 	}
 
 	task = $(document.createElement("a"))
 		.addClass("task")
-		.html(content)
+		.html(title)
 		.appendTo(item);
 
 	$("#task-list").append(item);
@@ -108,10 +108,10 @@ function renderTask(data) {
 /**
 * adds a new task to the system.
 *
-* data - an object with all the information {content, note, due, priority}
+* data - an object with all the information {title, note, due, priority}
 */
 function addTask(data) {
-	if (data.content == '') {
+	if (data.title == '') {
 		return false;
 	}
 
@@ -144,7 +144,7 @@ function addTask(data) {
 */
 function addInboxTask() {
 	var input = $("#new-task");
-	var task = {content: input.val()};
+	var task = {title: input.val()};
 	input.val("");
 	if (addTask(task) == true) {
 		renderTask(task);
@@ -215,4 +215,6 @@ $(document).ready(function() {
 			$("#options").hide().removeClass("hidden").slideDown(300);
 		});
 	});
+
+	// load stuff in the details view
 });
