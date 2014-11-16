@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>My MENU</title>
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src=""></script>
+<script type="text/javascript" src="style/mymenu.js"></script>
+<link href="style/mymenu.css" rel="stylesheet" type="text/css" />
+<link href="fa/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.nav').graptel();
+    });
+</script>
+
+    <ul class="nav">
+ 		<li><a href=""><i class="fa fa-home"></i><br> HOME</a></li>   
+        <li><a href=""><i class="fa fa-inbox"></i><br> INBOX</a></li>   
+        <li><a href="#"><i class="fa fa-list"></i><br> CATEGORIES</a>
+            <ul>
+                <li><a href="#">SUB=1</a></li>
+                <li><a href="#">SUB=2</a></li>
+                <li><a href="#">SUB=3</a></li>
+            </ul>
+        </li>
+         <li><a href="#"><i class="fa fa-archive"></i><br> ARCHIVE</a>
+            <ul>
+                <li><a href="#">SUB=1</a></li>
+                <li><a href="#">SUB=2</a></li>
+                <li><a href="#">SUB=3</a></li>
+            </ul>
+        </li>
+        <li><a href="#"><i class="fa fa-check-square"></i><br> DONE</a>
+	</ul>
+</body>
+</html>
